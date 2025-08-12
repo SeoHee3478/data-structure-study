@@ -205,12 +205,32 @@ console.log(`isEmpty: ${queue.isEmpty()}`);
 
 ## 실행 결과 예시
 ```
-====== enqueue() 세 번 호출 ======
-Node { data: 1, next: null, prev: null }
-====== dequeue() 네 번 호출 ======
-Node { data: 1, ... }
-Node { data: 2, ... }
-Node { data: 3, ... }
+======enqueue() 세 번 호출
+<ref *1> Node {
+  data: 1,
+  next: null,
+  prev: <ref *2> Node {
+    data: 2,
+    next: [Circular *1],
+    prev: Node { data: 3, next: [Circular *2], prev: null }
+  }
+}
+======dequeue() 네 번 호출
+Node {
+  data: 1,
+  next: null,
+  prev: <ref *1> Node {
+    data: 2,
+    next: null,
+    prev: Node { data: 3, next: [Circular *1], prev: null }
+  }
+}
+Node {
+  data: 2,
+  next: null,
+  prev: Node { data: 3, next: null, prev: null }
+}
+Node { data: 3, next: null, prev: null }
 null
 isEmpty: true
 ```
